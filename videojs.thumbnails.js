@@ -1,12 +1,10 @@
-import videojs from 'video.js';
-
 const defaults = {
 	0: {
 		src: 'example-thumbnail.png',
 	},
 };
 
-const extend = () => {
+const extend = function() {
 	let args;
 	let target;
 	let i;
@@ -24,6 +22,8 @@ const extend = () => {
 			}
 		}
 	}
+
+	return target;
 };
 
 const getComputedStyle = (el, pseudo) => {
@@ -60,7 +60,7 @@ const getScrollOffset = () => {
 	return window.pageXOffset ? { x: window.pageXOffset, y: window.pageYOffset } : { x: document.documentElement.scrollLeft, y: document.documentElement.scrollTop };
 };
 
-const thumbnailPlugin = () => {
+const plugin = function(options) {
 	let settings = extend({}, defaults, options);
 	let progressControl;
 	let duration;
@@ -196,6 +196,4 @@ const thumbnailPlugin = () => {
 	player.on('userinactive', moveCancel);
 };
 
-(() => {
-	videojs.registerPlugin('thumbnails', thumbnailPlugin);
-})();
+export const thumbnailPlugin = plugin;
